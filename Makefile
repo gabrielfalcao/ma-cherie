@@ -1,4 +1,4 @@
-all: test
+all: test run
 
 clean:
 	@find . -name '*.pyc' -delete
@@ -17,4 +17,9 @@ functional:
 
 acceptance:
 	@echo "Running acceptance tests ..."
+	@echo "Done."
+
+run:
+	@echo "Running server ..."
+	@python macherie/__init__.py
 	@echo "Done."
