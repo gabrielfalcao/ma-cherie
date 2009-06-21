@@ -134,7 +134,7 @@
 	}
 	.image_wrapper{text-align: center;}
 	.banner img{border: 3px solid #181B0F;}
-	.banner_last{margin-right:0;}
+	.banner_last{margin-right:45px; margin-top: 20px;}
 	.banner h2{
 		height: 38px;
 		background: url(../img/banner_top.gif) left no-repeat;
