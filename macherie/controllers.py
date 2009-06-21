@@ -18,7 +18,20 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from macherie import models
+import cherrypy
+from genshi.template import TemplateLoader
 
-def test_filesystem_has_permission():
-    assert models.FileSystem.has_permission('/etc/') == False, 'Current user should not have permission to'
+def render_html(filename, context):
+    params = cherrypy.response.body
+    loader = TemplateLoader(cherrypy.config['views.dir'],
+                            auto_reload=True)
+    template = loader.load(filename)
+    generator = template.generate(**context)
+    return generator.render('html', doctype='html')
+
+class MaCherie(object):
+    @cherrypy.expose
+    def index(self):
+        title = u'Ma Chérie'
+        content = 'Picture navigator'
+        return render_html('index.html', dict(title=title, content=content))

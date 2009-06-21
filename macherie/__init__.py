@@ -17,3 +17,34 @@
 # License along with this program; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
+import os
+import sys
+import cherrypy
+
+from controllers import MaCherie
+
+def runserver(this_path):
+    cherrypy.config.update({
+        'tools.encode.on': True,
+        'tools.encode.encoding': 'utf-8',
+        'tools.decode.on': True,
+        'tools.trailing_slash.on': True,
+        'tools.staticdir.root': this_path,
+        'tools.staticfile.on': True,
+        'tools.staticfile.filename':"/media/img/favicon.ico",
+        'views.dir': os.path.join(this_path, 'views'),
+    })
+
+    cherrypy.quickstart(MaCherie(), '/', {
+        '/media': {
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': 'media'
+        }
+    })
+
+
+if __name__ == '__main__':
+    our_path = os.path.abspath(os.path.dirname(__file__))
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    runserver(our_path)
+

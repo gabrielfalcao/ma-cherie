@@ -18,53 +18,53 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from macherie import helpers
+from macherie import models
 from utils import assert_raises
 
 def test_has_file_class():
-    assert hasattr(helpers, 'File'), \
-           'macherie.helpers does not have the class File'
-    assert issubclass(helpers.File, object), \
-           'macherie.helpers.File is not a class. ' \
-           'Got %r instead' % helpers.File
+    assert hasattr(models, 'File'), \
+           'macherie.models does not have the class File'
+    assert issubclass(models.File, object), \
+           'macherie.models.File is not a class. ' \
+           'Got %r instead' % models.File
 
 def test_has_folder_class():
-    assert hasattr(helpers, 'Folder'), \
-           'macherie.helpers does not have the class Folder'
-    assert issubclass(helpers.Folder, object), \
-           'macherie.helpers.Folder is not a class. ' \
-           'Got %r instead' % helpers.Folder
+    assert hasattr(models, 'Folder'), \
+           'macherie.models does not have the class Folder'
+    assert issubclass(models.Folder, object), \
+           'macherie.models.Folder is not a class. ' \
+           'Got %r instead' % models.Folder
 
 def test_has_filesystem_class():
-    assert hasattr(helpers, 'FileSystem'), \
-           'macherie.helpers does not have the class FileSystem'
-    assert issubclass(helpers.Folder, object), \
-           'macherie.helpers.FileSystem is not a class. ' \
-           'Got %r instead' % helpers.Folder
+    assert hasattr(models, 'FileSystem'), \
+           'macherie.models does not have the class FileSystem'
+    assert issubclass(models.Folder, object), \
+           'macherie.models.FileSystem is not a class. ' \
+           'Got %r instead' % models.Folder
 
 def test_has_filehandler_class():
-    assert hasattr(helpers, 'FileHandler'), \
-           'macherie.helpers does not have the class FileHandler'
-    assert issubclass(helpers.FileHandler, object), \
-           'macherie.helpers.FileHandler ' \
-           'is not a class. Got %r instead' % helpers.FileHandler
+    assert hasattr(models, 'FileHandler'), \
+           'macherie.models does not have the class FileHandler'
+    assert issubclass(models.FileHandler, object), \
+           'macherie.models.FileHandler ' \
+           'is not a class. Got %r instead' % models.FileHandler
 
 class TestFileSystem:
     def test_filesystem_has_method_has_permission(self):
         msg1 = 'FileSystem.has_permission does not exist'
         msg2 = 'FileSystem.has_permission is not a method'
-        assert hasattr(helpers.FileSystem, 'has_permission'), msg1
-        assert callable(helpers.FileSystem.has_permission), msg2
+        assert hasattr(models.FileSystem, 'has_permission'), msg1
+        assert callable(models.FileSystem.has_permission), msg2
 
 class TestFileHandler:
     def test_file_handler_construction_fails_without_parameters(self):
         assert_raises(TypeError,
-                      helpers.FileHandler,
+                      models.FileHandler,
                       exc_pattern=r'__init__.. takes at least 2 arguments .1 given.')
 
     def test_file_handler_construction_fails_with_more_than_two_parameters(self):
         assert_raises(TypeError,
-                      helpers.FileHandler,
+                      models.FileHandler,
                       None,
                       None,
                       None,
@@ -72,49 +72,49 @@ class TestFileHandler:
 
     def test_file_handler_construction_fails_with_non_string_param(self):
         assert_raises(TypeError,
-                      helpers.FileHandler,
+                      models.FileHandler,
                       None,
                       exc_pattern=r'FileHandler.path should be string, got None')
 
     def test_filehandler_takes_a_string_at_construction(self):
-        assert isinstance(helpers.FileHandler('/home'), helpers.FileHandler)
+        assert isinstance(models.FileHandler('/home'), models.FileHandler)
 
     def test_filehandler_has_base_path_attr(self):
-        handler = helpers.FileHandler('/home/kept')
-        msg = "helpers.FileHandler('/home/kept') should have attribute base_path"
+        handler = models.FileHandler('/home/kept')
+        msg = "models.FileHandler('/home/kept') should have attribute base_path"
         assert hasattr(handler, 'base_path'), msg
 
     def test_filehandler_holds_its_string_in_base_path_attribute(self):
         path = '/home/kept'
-        handler = helpers.FileHandler(path)
-        msg = "helpers.FileHandler('/home/kept').base_path should be %r, but is %r"
+        handler = models.FileHandler(path)
+        msg = "models.FileHandler('/home/kept').base_path should be %r, but is %r"
         assert handler.base_path == path, msg % (path, handler.base_path)
 
     def test_filehandler_holds_base_path_as_unicode(self):
         path = '/home/kept'
-        handler = helpers.FileHandler(path)
-        msg = "helpers.FileHandler('/home/kept').base_path " \
+        handler = models.FileHandler(path)
+        msg = "models.FileHandler('/home/kept').base_path " \
               "should be type unicode, but is %r"
         assert isinstance(handler.base_path, unicode), msg % (type(handler.base_path))
 
     def test_filehandler_has_file_system_attr(self):
-        handler = helpers.FileHandler('/home/foo')
-        msg = "helpers.FileHandler('/home/foo') should have attribute file_system"
+        handler = models.FileHandler('/home/foo')
+        msg = "models.FileHandler('/home/foo') should have attribute file_system"
         assert hasattr(handler, 'file_system'), msg
 
     def test_filehandler_construction_with_custom_file_system(self):
         class FileSystemStub:
             pass
 
-        handler = helpers.FileHandler('/home/foo', file_system=FileSystemStub)
-        assert isinstance(handler, helpers.FileHandler)
+        handler = models.FileHandler('/home/foo', file_system=FileSystemStub)
+        assert isinstance(handler, models.FileHandler)
 
     def test_filehandler_construction_with_custom_file_system_holds_attr(self):
         class FileSystemStub:
             pass
 
-        handler = helpers.FileHandler('/home/fs/bar', file_system=FileSystemStub)
-        msg = "helpers.FileHandler('/home/foo').file_system " \
+        handler = models.FileHandler('/home/fs/bar', file_system=FileSystemStub)
+        msg = "models.FileHandler('/home/foo').file_system " \
               "be %r, but is %r"
 
         assert handler.file_system is FileSystemStub, \

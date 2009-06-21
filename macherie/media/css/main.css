@@ -1,0 +1,280 @@
+@charset "UTF-8";
+/* =CALL LIBRARY */
+	@import url("reset-min.css"); /* ------- Reset all CSS Styles */
+
+/* =GENERAL - the general styles */
+	body{
+		font: 62.5%/2.2em Arial, Tahoma, Verdana,Helvetica, sans-serif;
+		color: #4b4942;
+		background: #404639 url(../img/bg_patterns.gif);
+	}
+	a{text-decoration: none;color: #5599a7;}
+	a:hover{color: #bb800f;}
+	.hide,hr{display: none;}
+	strong{font-weight: bold;}
+
+
+/* =LAYOUT - the main layout styles */
+	/* for the rounded top */
+	#containertop{
+		position: absolute;
+		width: 902px;
+		margin: -10px auto 0 auto;
+		height: 10px;
+		font-size:0.1em;
+		background:url(../img/container_top.png) left bottom no-repeat;
+	}
+	* html #containertop{behavior: url(stylesheets/iepngfix.htc);} /* to correct transparent png in IE */
+	/* container */
+	#container{
+		width: 902px;
+		margin: 44px auto 0 auto;
+		background: #171A0F url(../img/bg_container.png);
+		padding-bottom:10px;
+	}
+
+/* =HEADER */
+	/* Logo and Site Title */
+	h1{
+		font-size: 2.4em;
+		text-transform: uppercase;
+	}
+	h1 a,h1 a:hover{
+		display: block;
+		width: 300px;
+		height: 30px;
+		padding-top:10px;
+		margin-left:18px;
+		background: url(../img/logo.gif) 0 0 no-repeat;
+		padding-left:52px;
+		color: #7b8266;
+	}
+
+/* =TOP NAVIGATION and SEARCH */
+	/* top navigation */
+	#navigation_wrapper{
+		background: #363B28 url(../img/nav_bg.gif) 0 0 repeat-x;
+		height: 37px;
+		width: 861px;
+		margin: 10px auto 20px auto;
+	}
+	#navigation{
+		float: left;
+		padding-left:7px;
+		height: 37px;
+		background: url(../img/navigation_left.gif) left top no-repeat;
+	}
+	#navigation li{
+		float: left;
+	}
+	#navigation li a{
+		padding: 7px 10px 0 10px;
+		height: 30px;
+		float: left;
+		font-family: "Trebuchet MS";
+		font-size: 1.45em;
+		font-weight: bold;
+		letter-spacing:-0.03em;
+		color: #b1b3ab;
+	}
+	#navigation li a:hover{
+		color: #82865b;
+		background: #394030 url(../img/nav_hover_bg.gif) 0 0 repeat-x;
+	}
+	/* search */
+	#search_wrapper{
+		float: right;
+		height: 30px;
+		padding:7px 10px 0 0;
+		background: url(../img/navigation_right.gif) right top no-repeat;
+	}
+	.search{
+		background: #696D5F;
+		border: 1px solid #212417;
+		width: 160px;
+		height: 18px;
+		padding: 3px 2px 0 3px;
+		color: #474A40;
+	}
+/* =MAIN IMAGE */
+	#main_image{
+		width:860px;
+		position: relative;
+		margin: 0 auto;
+	}
+	/* frame: the small rounded image in the corner picture (top,right,bottom,left) */
+	#frame_image_top,#frame_image_bottom{
+		position: absolute;
+		width: 860px;
+		height: 7px;
+		font-size:0.1em;
+		top:0;left:0;
+		background: url(../img/frame_image_top.png) top no-repeat;
+	}
+	#frame_image_bottom{
+		bottom:0;top:auto;
+		background: url(../img/frame_image_bottom.png) bottom no-repeat;
+	}
+	* html #frame_image_top,* html #frame_image_bottom{behavior: url(stylesheets/iepngfix.htc);} /* to correct transparent png in IE */
+
+/* =BANNER */
+	#banner_wrapper{
+		width: 874px;
+		overflow: hidden;
+		padding:30px 0 0 28px;
+	}
+	.banner{
+		float: left;
+		width: 245px;
+		float: left;
+		background: #353C2C url(../img/banner_bg.gif) left repeat-y;
+		margin-right:54px;
+		padding-bottom:6px;
+		position: relative;
+	}
+	.image_wrapper{text-align: center;}
+	.banner img{border: 3px solid #181B0F;}
+	.banner_last{margin-right:0;}
+	.banner h2{
+		height: 38px;
+		background: url(../img/banner_top.gif) left no-repeat;
+		font:1.9em "Lucida Grande", "Trebuchet MS", Arial, Helvetica, sans-serif;
+		text-transform: uppercase;
+		color: #7c7c58;
+		padding: 15px 0 0 17px;
+	}
+	/* for the rounded bottom */
+	.image_wrapper span{
+		position: absolute;
+		width: 245px;
+		height: 6px;
+		font-size:.1em;
+		left:0;bottom:-1px;
+		background: #353C2C url(../img/banner_bottom.gif) bottom no-repeat;
+	}
+
+/* =SERVICES */
+	#services{
+		width: 858px;
+		margin:26px auto 0 auto;
+		position: relative;
+		border: 2px solid #3B3F2D;
+	}
+	#servicescontent{
+		width: 858px;
+		margin: 0 auto;
+		overflow: hidden;
+		background: #39442B url(../img/services_bg.jpg) bottom repeat-x;
+		padding: 30px 0 20px 0;
+                height:200px;
+	}
+	/* sevices header */
+	#services h2{
+		background: #2d3622 url(../img/services_top_bg.jpg);
+		height: 39px;
+		font-size:2.5em;
+		color: #7C7C58;
+		padding: 12px 0 0 40px;
+		border-bottom: 1px solid #2b2e1f;
+	}
+	/* top rounded image */
+	#services h2 span{
+		position: absolute;
+		display: block;
+		height: 8px;
+		width: 862px;
+		left:0;top:0;
+		font-size:0.1em;
+		background: url(../img/services_top.jpg) left top no-repeat;
+		margin: -2px;
+	}
+	/* bottom rounded image */
+	.bottom_rounded{
+		position: absolute;
+		display: block;
+		width: 862px;
+		height: 7px;
+		font-size:0.1em;
+		right:0;bottom:0;
+		background: url(../img/services_bottom.jpg) no-repeat;
+		margin: -2px;
+	}
+	/* big image on the right bottom */
+	.bottom_pic{
+		z-index:2;
+		position: absolute;
+		padding-right: 28px;
+		bottom:2px;right:0;
+		width: 287px;
+		height: 224px;
+		margin-bottom:-2px;
+		background: url(../img/services_bg_pic.jpg) left top no-repeat;
+	}
+	/* list of services */
+	.serviceslist{
+		padding-left: 30px;
+		float: left;
+		font-size:1.3em;
+		line-height:1em;
+	}
+	.serviceslist li a{
+		display: block;
+		padding: 10px;
+		width: 197px;
+		font-family: "Lucida Grande", "Trebuchet MS", Arial, Helvetica, sans-serif;
+		text-transform: uppercase;
+		letter-spacing:-.03em;
+		color: #7B8266;
+		background: #323C26 url(../img/list_dotted_border.gif) bottom repeat-x;
+	}
+	.serviceslist li a:hover{
+		color: #7B8266;
+		background: #2C3421 url(../img/list_dotted_border.gif) bottom repeat-x;
+	}
+
+/* =FOOTER */
+	#footer_wrapper{
+		width: 871px;
+		padding-left:31px;
+		padding-bottom:25px;
+		margin: 0 auto;
+		text-transform:uppercase;
+		font-size: 1.2em;
+		background: url(../img/footer_left.png) 0 0 no-repeat;
+	}
+	#footer{
+		position: relative;
+		width: 840px;
+		height: 67px;
+		background: #313B24 url(../img/footer_bg.png) 0 bottom repeat-x;
+	}
+	#footer .logo{
+		padding: 34px 0 0 30px;
+		width: 300px;
+		float: left;
+		background: url(../img/logo_small.gif) left bottom no-repeat;
+	}
+	#footer .logo span{
+		position: absolute;
+		display: block;
+		right:-31px;top:0;
+		width: 31px;
+		height: 67px;
+		background: url(../img/footer_right.png) right bottom no-repeat;
+	}
+	* html #footer .logo span, * html #footer_wrapper{behavior: url(stylesheets/iepngfix.htc);}
+	#footer ul{
+		padding-top: 34px;
+		padding-right: 5px;
+		float: right;
+	}
+	#footer ul li{
+		float: left;
+		padding-left:10px;
+	}
+	#footer a{
+		color: #7B8266;
+	}
+	#footer li a:hover{
+		color: #AFBB4F;
+	}
