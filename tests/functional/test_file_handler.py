@@ -20,5 +20,10 @@
 
 from macherie import models
 
-def test_filesystem_has_permission():
-    assert models.FileSystem.has_permission('/etc/') == False, 'Current user should not have permission to'
+def test_filesystem_can_access():
+    assert models.FileSystem.can_access('/etc/') == True, \
+           'Current user should have permission to access /etc/'
+
+def test_filesystem_can_modify():
+    assert models.FileSystem.can_modify('/etc/') == False, \
+           'Current user should not have permission to modify /etc/'

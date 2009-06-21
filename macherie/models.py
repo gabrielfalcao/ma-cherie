@@ -18,6 +18,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 import os
+import glob
 
 class File(object):
     pass
@@ -27,9 +28,18 @@ class Folder(object):
 
 class FileSystem(object):
     @classmethod
-    def has_permission(self, path):
+    def can_modify(self, path):
         perms = os.F_OK|os.W_OK|os.R_OK|os.X_OK
         return os.access(path, perms)
+
+    @classmethod
+    def can_access(self, path):
+        perms = os.F_OK|os.R_OK|os.X_OK
+        return os.access(path, perms)
+
+    @classmethod
+    def list_images(self, path):
+        return glob.glob(os.path.join(path, '*.jpg'))
 
 class FileHandler(object):
     base_path = None

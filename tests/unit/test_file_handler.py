@@ -50,11 +50,23 @@ def test_has_filehandler_class():
            'is not a class. Got %r instead' % models.FileHandler
 
 class TestFileSystem:
-    def test_filesystem_has_method_has_permission(self):
-        msg1 = 'FileSystem.has_permission does not exist'
-        msg2 = 'FileSystem.has_permission is not a method'
-        assert hasattr(models.FileSystem, 'has_permission'), msg1
-        assert callable(models.FileSystem.has_permission), msg2
+    def test_filesystem_has_method_can_access(self):
+        msg1 = 'FileSystem.can_access does not exist'
+        msg2 = 'FileSystem.can_access is not a method'
+        assert hasattr(models.FileSystem, 'can_access'), msg1
+        assert callable(models.FileSystem.can_access), msg2
+
+    def test_filesystem_has_method_can_modify(self):
+        msg1 = 'FileSystem.can_modify does not exist'
+        msg2 = 'FileSystem.can_modify is not a method'
+        assert hasattr(models.FileSystem, 'can_modify'), msg1
+        assert callable(models.FileSystem.can_modify), msg2
+
+    def test_filesystem_has_method_list_images(self):
+        msg1 = 'FileSystem.list_images does not exist'
+        msg2 = 'FileSystem.list_images is not a method'
+        assert hasattr(models.FileSystem, 'list_images'), msg1
+        assert callable(models.FileSystem.list_images), msg2
 
 class TestFileHandler:
     def test_file_handler_construction_fails_without_parameters(self):

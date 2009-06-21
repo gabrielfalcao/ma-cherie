@@ -19,15 +19,7 @@
 # Boston, MA 02111-1307, USA.
 
 import cherrypy
-from genshi.template import TemplateLoader
-
-def render_html(filename, context):
-    params = cherrypy.response.body
-    loader = TemplateLoader(cherrypy.config['views.dir'],
-                            auto_reload=True)
-    template = loader.load(filename)
-    generator = template.generate(**context)
-    return generator.render('html', doctype='html')
+from macherie.views import render_html
 
 class MaCherie(object):
     @cherrypy.expose
