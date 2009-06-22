@@ -3,8 +3,11 @@ all: test run
 clean:
 	@find . -name '*.pyc' -delete
 
-test: unit functional acceptance
-
+test:
+	@echo "Running unit + functionial tests ..."
+	@nosetests -s --with-coverage --cover-package=macherie tests/unit tests/functional
+	@echo "Done."
+	@make acceptance
 unit:
 	@echo "Running unit tests ..."
 	@nosetests -s --with-coverage --cover-package=macherie tests/unit
