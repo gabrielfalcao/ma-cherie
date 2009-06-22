@@ -32,10 +32,10 @@
         </div><!-- navigation wrapper -->
 
         <div id="banner_wrapper">
-          <div class="banner banner_last" py:for="title in range(1, 10)">
-            <h2>Zen Gardens $title</h2>
+          <div class="banner banner_last" py:for="image in images">
+            <h2>$image.name</h2>
             <div class="image_wrapper">
-              <img src="${make_url('/media/img/zengardens.jpg')}" width="228" height="202" alt="image: Zen Gardens" />
+              <img src="${make_url('/image/')}$image.name" width="228" height="202" alt="image: $image.width X $image.height" />
             </div><!-- image_wrapper -->
           </div><!-- banner -->
         </div><!-- banner_wrapper -->

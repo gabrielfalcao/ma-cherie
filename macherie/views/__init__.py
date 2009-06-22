@@ -18,7 +18,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import os
+import Image
+import ImageDraw
 import cherrypy
+
+from StringIO import StringIO
 from genshi.template import TemplateLoader
 
 def make_url(url):
@@ -71,3 +76,46 @@ def render_html(filename, context, template_path=None):
     generator = template.generate(**context)
     return generator.render('html', doctype='html')
 
+def jpeg(path, base='data'):
+    fullpath = os.path.join(os.path.dirname(__file__), '..', base, path)
+    try:
+        img = Image.open(fullpath)
+    except IOError, e:
+        cherrypy.response.status = 404
+        return unicode(e)
+
+    sfile = StringIO()
+    img.save(sfile, "JPEG", quality=100)
+    cherrypy.response.headers['Content-type'] = "image/jpeg"
+    return sfile.getvalue()
+
+def picture(img,
+            width,
+            height,
+            field='image',
+            crop=False,
+            center=True,
+            must_cache=True,
+            mask=None,
+            background=0xffffff):
+
+    width, height = int(width), int(height)
+    wished_size = width, height
+    img = Image.open(getattr(picture, field).path)
+
+    if crop:
+        img = fit(img, (width, height))
+
+    if center:
+        old_img = img
+        img = Image.new('RGBA', (width, height), background)
+        ow, oh = old_img.size
+        left = (width - ow) / 2
+        top = (height - oh) / 2
+        img.paste(old_img, (left, top))
+
+    if mask:
+        mask_img = Image.open(mask)
+        img.paste(mask_img, None, mask_img)
+
+    return jpeg_response(img)

@@ -19,9 +19,20 @@
 # Boston, MA 02111-1307, USA.
 import os
 import glob
+import cherrypy
+import Image
 
 class File(object):
-    pass
+    def __init__(self, path):
+        self.path = path
+        self.name = os.path.split(path)[1]
+        self.img = Image.open(path)
+        self.width = self.img.size[0]
+        self.height = self.img.size[1]
+
+    @classmethod
+    def all(cls):
+        return [cls(f) for f in FileSystem.list_images(cherrypy.config['data.dir'])]
 
 class Folder(object):
     pass

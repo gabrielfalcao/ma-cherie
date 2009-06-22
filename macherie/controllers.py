@@ -17,15 +17,25 @@
 # License along with this program; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-
+import Image
 import cherrypy
 
 from macherie.models import File
-from macherie.views import render_html
+from macherie.views import render_html, jpeg
+
+class ImageHandler(object):
+    exposed = True
+
+    @cherrypy.expose
+    def __call__(self, *args, **kw):
+        return jpeg(path="/".join(args), **kw)
 
 class MaCherie(object):
+    image = ImageHandler()
+
     @cherrypy.expose
     def index(self):
         title = u'Ma Chérie'
         content = 'Picture navigator'
-        return render_html('index.html', dict(title=title, content=content))
+        images = File.all()
+        return render_html('index.html', dict(title=title, content=content, images=images))

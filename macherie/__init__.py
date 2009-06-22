@@ -33,6 +33,7 @@ def runserver(this_path):
         'tools.staticfile.on': True,
         'tools.staticfile.filename':"/media/img/favicon.ico",
         'views.dir': os.path.join(this_path, 'views'),
+        'data.dir': os.path.join(this_path, 'data'),
     })
 
     cherrypy.quickstart(MaCherie(), '/', {
