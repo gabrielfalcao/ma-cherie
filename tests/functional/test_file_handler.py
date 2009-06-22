@@ -18,7 +18,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import os
+
 from macherie import models
+
+templates = os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates'))
 
 def test_filesystem_can_access():
     assert models.FileSystem.can_access('/etc/') == True, \
@@ -27,3 +31,26 @@ def test_filesystem_can_access():
 def test_filesystem_can_modify():
     assert models.FileSystem.can_modify('/etc/') == False, \
            'Current user should not have permission to modify /etc/'
+
+def test_filesystem_list_images():
+    expected_files = [
+        'file.jpg',
+        'file.JPG',
+        'file.JPg',
+        'file.jPg',
+        'file.gif',
+        'file.png',
+        'file.jpeg',
+    ]
+    expected_paths = sorted([os.path.join(templates, f) for f in expected_files])
+
+    for fname in expected_paths:
+        open(fname, 'w').write('Fake img file')
+
+    got_paths = models.FileSystem.list_images(templates)
+
+    try:
+        assert got_paths == expected_paths, "Expected %r, got %r" % (got_paths, expected_paths)
+    finally:
+        for f in expected_paths:
+            os.remove(f)

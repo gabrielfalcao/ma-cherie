@@ -39,7 +39,15 @@ class FileSystem(object):
 
     @classmethod
     def list_images(self, path):
-        return glob.glob(os.path.join(path, '*.jpg'))
+        lst = []
+        for filename in os.listdir(path):
+            if filename.lower().endswith('.jpg') or \
+               filename.lower().endswith('.jpeg') or \
+               filename.lower().endswith('.gif') or \
+               filename.lower().endswith('.png'):
+                lst.append(os.path.join(path, filename))
+
+        return sorted(lst)
 
 class FileHandler(object):
     base_path = None
