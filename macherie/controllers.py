@@ -19,6 +19,8 @@
 # Boston, MA 02111-1307, USA.
 
 import cherrypy
+
+from macherie.models import File
 from macherie.views import render_html
 
 class MaCherie(object):
