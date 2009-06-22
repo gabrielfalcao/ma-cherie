@@ -76,10 +76,10 @@ def render_html(filename, context, template_path=None):
     generator = template.generate(**context)
     return generator.render('html', doctype='html')
 
-def jpeg(path, base='data'):
+def jpeg(path, base='data', img_module=Image):
     fullpath = os.path.join(os.path.dirname(__file__), '..', base, path)
     try:
-        img = Image.open(fullpath)
+        img = img_module.open(fullpath)
     except IOError, e:
         cherrypy.response.status = 404
         return unicode(e)

@@ -66,3 +66,8 @@ def test_make_url_with_trailling_slash_on_both():
 def test_views_has_function_render_html():
     assert hasattr(views, 'render_html'), 'macherie.views should have the function render_html'
     assert callable(views.render_html), 'macherie.views.render_html should be callable'
+
+def test_views_has_function_jpeg():
+    assert hasattr(views, 'jpeg'), 'macherie.views should have the function jpeg'
+    assert callable(views.jpeg), 'macherie.views.jpeg should be callable'
+
