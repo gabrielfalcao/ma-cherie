@@ -22,3 +22,50 @@ import cherrypy
 from macherie import models
 from utils import assert_raises
 
+templates = os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates'))
+data = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
+
+def test_filesystem_can_access():
+    assert models.FileSystem.can_access('/etc/') == True, \
+           'Current user should have permission to access /etc/'
+
+def test_filesystem_can_modify():
+    assert models.FileSystem.can_modify('/etc/') == False, \
+           'Current user should not have permission to modify /etc/'
+
+def test_filesystem_list_images():
+    expected_files = [
+        'file.jpg',
+        'file.JPG',
+        'file.JPg',
+        'file.jPg',
+        'file.gif',
+        'file.png',
+        'file.jpeg',
+    ]
+    expected_paths = sorted([os.path.join(templates, f) for f in expected_files])
+
+    for fname in expected_paths:
+        open(fname, 'w').write('Fake img file')
+
+    got_paths = models.FileSystem.list_images(templates)
+
+    try:
+        assert got_paths == expected_paths, "Expected %r, got %r" % (got_paths, expected_paths)
+    finally:
+        for f in expected_paths:
+            os.remove(f)
+
+def test_file_all():
+    cherrypy.config['data.dir'] = data
+    files = models.File.all()
+
+    assert isinstance(files, list), 'models.File.all() should ' \
+           'return a list, got %r' % files
+    assert len(files) == 2, 'models.File.all() looking for ' \
+           'images on "%s" should return 2 images. Got %d' \
+           % (data, len(files))
+
+    condition = isinstance(files[0], models.File) and isinstance(files[1], models.File)
+    assert condition, 'the files returned by models.File.all() ' \
+           'should be instances of models.File. Got %r' % files
