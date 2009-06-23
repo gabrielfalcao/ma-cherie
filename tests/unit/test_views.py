@@ -17,7 +17,7 @@
 # License along with this program; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-
+import Image
 import cherrypy
 from os.path import join
 from macherie import views
@@ -126,3 +126,8 @@ def test_jpeg_return_string_when_file_not_found():
     assert isinstance(ret, unicode), 'The return value should be unicode, but is %r' % type(ret)
     assert ret == 'File not found: foo-file.jpg', 'Wrong error description: %r' % ret
     views.Image = Image
+
+def test_crop_to_fit():
+    img = Image.new('RGBA', (653, 342))
+    ret = views.crop_to_fit(img, (320, 240))
+    assert ret.size == (320, 240), 'Got expected size 458x240, got %rx%r.' % ret.size
