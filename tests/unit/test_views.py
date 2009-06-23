@@ -94,7 +94,12 @@ def test_jpeg_success():
     pil_mock.expects(once()).open(eq(path)).will(return_value(img_mock))
 
     img_mock.expects(once()).save(eq(stringio_mock), eq("JPEG"), quality=eq(100))
-    return_got = views.jpeg(path, img_module=pil_mock, stringio_module=stringio_module_mock)
+
+    Image = views.Image
+    StringIO = views.StringIO
+    views.StringIO = stringio_module_mock
+    views.Image = pil_mock
+    return_got = views.jpeg(path)
 
     pil_mock.verify()
     stringio_module_mock.verify()
@@ -104,13 +109,20 @@ def test_jpeg_success():
     mime = cherrypy.response.headers['Content-type']
     assert mime == 'image/jpeg', 'The response header "Content-type" should be image/jpeg, but got %r' % mime
 
+    views.Image = Image
+    views.StringIO = StringIO
+
 def test_jpeg_return_string_when_file_not_found():
     filename = 'foo-file.jpg'
     path = join('bazbar', filename)
     pil_mock = Mock()
+    Image = views.Image
+    views.Image = pil_mock
+
     pil_mock.expects(once()).open(eq(path)).will(raise_exception(IOError('File not found: foo-file.jpg')))
-    ret = views.jpeg(filename, base_path='bazbar', img_module=pil_mock)
+    ret = views.jpeg(filename, base_path='bazbar')
     pil_mock.verify()
 
     assert isinstance(ret, unicode), 'The return value should be unicode, but is %r' % type(ret)
     assert ret == 'File not found: foo-file.jpg', 'Wrong error description: %r' % ret
+    views.Image = Image

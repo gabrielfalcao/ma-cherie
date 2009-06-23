@@ -80,17 +80,17 @@ def render_html(filename, context, template_path=None):
 
 
 
-def jpeg(path, base_path=base_path, img_module=Image, stringio_module=StringIO):
+def jpeg(path, base_path=base_path):
     if not isinstance(path, basestring):
         raise TypeError('jpeg() takes a string as parameter, got %r.' % path)
     fullpath = os.path.join(base_path, path)
     try:
-        img = img_module.open(fullpath)
+        img = Image.open(fullpath)
     except IOError, e:
         cherrypy.response.status = 404
         return unicode(e)
 
-    sfile = stringio_module.StringIO()
+    sfile = StringIO.StringIO()
     img.save(sfile, "JPEG", quality=100)
     cherrypy.response.headers['Content-type'] = "image/jpeg"
     return sfile.getvalue()
