@@ -10,7 +10,7 @@ Why "Ma Chérie"
 
 It is a two-hit combo naming:
 * The project is based in [CherryPy](http://www.cherrypy.org/ "CherryPy"), "Chérie" resembles it.
-* Means "My Dear Women", and I made it to publish some personal pictures to my girl to see.
+* Means "My Dear Woman", and I made it to publish some personal pictures to my girl to see.
 
 Dependencies
 ============
