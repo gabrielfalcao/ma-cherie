@@ -121,11 +121,7 @@ def crop_to_fit(img, output_size):
 
     # make the crop
     left_side = int(live_area[0] + (float(live_size[0] - crop_width) * 0.5))
-    if left_side < 0:
-        left_side = 0
     top_side = int(live_area[1] + (float(live_size[1] - crop_height) * 0.5))
-    if top_side < 0:
-        top_side = 0
 
 
     outputImage = img.crop((left_side, top_side, left_side + crop_width, top_side + crop_height))
