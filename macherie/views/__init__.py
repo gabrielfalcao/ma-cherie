@@ -133,7 +133,7 @@ def crop_to_fit(img, output_size):
     # resize the image and return it
     return outputImage.resize(output_size, 3)
 
-def picture(img,
+def picture(path,
             width,
             height,
             field='image',
@@ -143,7 +143,7 @@ def picture(img,
             background=0xffffff):
 
     wished_size = width, height
-    img = Image.open(getattr(picture, field).path)
+    img = Image.open(os.path.join(base_path, path))
 
     if crop:
         img = crop_to_fit(img, (width, height))
@@ -160,4 +160,8 @@ def picture(img,
         mask_img = Image.open(mask)
         img.paste(mask_img, None, mask_img)
 
-    return jpeg_response(img)
+    sfile = StringIO.StringIO()
+    img.save(sfile, "JPEG", quality=100)
+    cherrypy.response.headers['Content-type'] = "image/jpeg"
+    return sfile.getvalue()
+

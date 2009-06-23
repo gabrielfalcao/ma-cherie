@@ -3,10 +3,14 @@
   <head>
     <title>$title</title>
     <link rel="stylesheet" href="${make_url('/media/css/main.css')}" type="text/css" media="all" />
+    <link rel="stylesheet" href="${make_url('/media/css/jquery.lightbox-0.5.css')}" type="text/css" media="all" />
     <script src="${make_url('/media/js/jquery.js')}" type="text/javascript"></script>
     <script src="${make_url('/media/js/jquery.ui.js')}" type="text/javascript"></script>
+    <script src="${make_url('/media/js/jquery.lightbox-0.5.js')}" type="text/javascript"></script>
+
     <script type="text/javascript">
     $(document).ready(function() {
+        $('#banner_wrapper a').lightBox();
     });
     </script>
   </head>
@@ -19,12 +23,11 @@
         <div id="navigation_wrapper">
           <!-- Top Navigation -->
           <ul id="navigation">
-            <li><a href="#" title="Pictures">Pictures</a></li>
-            <li><a href="#" title="Preferences">Preferences</a></li>
+            <li><a href="${make_url('/')}" title="Pictures">Pictures</a></li>
           </ul>
           <!-- Search Field -->
           <fieldset id="search_wrapper">
-            <form action="#">
+            <form action="?filter">
               <input type="text" value="Search" class="search" name="search" />
               <input type="submit" value="Search" class="hide" />
             </form>
@@ -35,7 +38,7 @@
           <div class="banner banner_last" py:for="image in images">
             <h2>$image.name</h2>
             <div class="image_wrapper">
-              <img src="${make_url('/image/')}$image.name" width="228" height="202" alt="image: $image.width X $image.height" />
+              <a href="${make_url('/image/%s' % image.name)}"><img src="${make_url('/image/crop/228x202/%s' % image.name)}" width="228" height="202" alt="image: $image.width X $image.height" /></a>
             </div><!-- image_wrapper -->
           </div><!-- banner -->
         </div><!-- banner_wrapper -->
