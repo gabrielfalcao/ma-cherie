@@ -136,8 +136,7 @@ def crop_to_fit(img, output_size):
 def picture(path,
             width,
             height,
-            field='image',
-            crop=False,
+            crop=True,
             center=True,
             mask=None,
             background=0xffffff):
