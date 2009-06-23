@@ -26,6 +26,8 @@ import StringIO
 
 from genshi.template import TemplateLoader
 
+base_path = os.path.join(os.path.dirname(__file__), '..', 'data')
+
 def make_url(url):
     if not isinstance(url, basestring):
         raise TypeError('macherie.views.make_url ' \
@@ -76,10 +78,12 @@ def render_html(filename, context, template_path=None):
     generator = template.generate(**context)
     return generator.render('html', doctype='html')
 
-def jpeg(path, base='data', img_module=Image, stringio_module=StringIO):
+
+
+def jpeg(path, base_path=base_path, img_module=Image, stringio_module=StringIO):
     if not isinstance(path, basestring):
         raise TypeError('jpeg() takes a string as parameter, got %r.' % path)
-    fullpath = os.path.join(os.path.dirname(__file__), '..', base, path)
+    fullpath = os.path.join(base_path, path)
     try:
         img = img_module.open(fullpath)
     except IOError, e:

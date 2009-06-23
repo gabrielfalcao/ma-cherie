@@ -19,6 +19,7 @@
 # Boston, MA 02111-1307, USA.
 
 import cherrypy
+from os.path import join
 from macherie import views
 from utils import assert_raises
 from pmock import *
@@ -103,3 +104,13 @@ def test_jpeg_success():
     mime = cherrypy.response.headers['Content-type']
     assert mime == 'image/jpeg', 'The response header "Content-type" should be image/jpeg, but got %r' % mime
 
+def test_jpeg_return_string_when_file_not_found():
+    filename = 'foo-file.jpg'
+    path = join('bazbar', filename)
+    pil_mock = Mock()
+    pil_mock.expects(once()).open(eq(path)).will(raise_exception(IOError('File not found: foo-file.jpg')))
+    ret = views.jpeg(filename, base_path='bazbar', img_module=pil_mock)
+    pil_mock.verify()
+
+    assert isinstance(ret, unicode), 'The return value should be unicode, but is %r' % type(ret)
+    assert ret == 'File not found: foo-file.jpg', 'Wrong error description: %r' % ret
