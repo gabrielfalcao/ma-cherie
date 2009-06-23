@@ -4,7 +4,7 @@ clean:
 	@find . -name '*.pyc' -delete
 
 test:
-	@echo "Running unit + functionial tests ..."
+	@echo "Running unit + functional tests ..."
 	@nosetests -s --with-coverage --cover-package=macherie tests/unit tests/functional
 	@echo "Done."
 	@make acceptance
