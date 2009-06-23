@@ -127,10 +127,15 @@ def test_jpeg_return_string_when_file_not_found():
     assert ret == 'File not found: foo-file.jpg', 'Wrong error description: %r' % ret
     views.Image = Image
 
-def test_crop_to_fit():
+def test_crop_to_fit_bigger():
     img = Image.new('RGBA', (653, 342))
     ret = views.crop_to_fit(img, (320, 240))
-    assert ret.size == (320, 240), 'Got expected size 458x240, got %rx%r.' % ret.size
+    assert ret.size == (320, 240), 'Got expected size 320x240, got %rx%r.' % ret.size
+
+def test_crop_to_fit_lower():
+    img = Image.new('RGBA', (300, 200))
+    ret = views.crop_to_fit(img, (600, 500))
+    assert ret.size == (600, 500), 'Got expected size 320x240, got %rx%r.' % ret.size
 
 def test_picture_takes_3_parameters():
     assert_raises(TypeError, views.picture, exc_pattern=r'picture.. takes at least 3 arguments .0 given.')
@@ -143,3 +148,88 @@ def test_picture_second_param_should_be_int():
 
 def test_picture_third_param_should_be_int():
     assert_raises(TypeError, views.picture, '', 1, None, exc_pattern=r'picture.. takes a integer as height parameter, got None.')
+
+def test_picture_with_crop_true_will_crop_to_fit():
+    base_path = '/basepath/for/test_picture_success'
+    path = 'my_picture.jpg'
+    img_mock = Mock()
+    img_mock.size = 300, 300
+    pil_mock = Mock()
+
+    stringio_module_mock = Mock()
+    stringio_mock = Mock()
+    return_mock = Mock()
+
+    stringio_mock.expects(once()).getvalue().will(return_value(return_mock))
+
+    stringio_module_mock.expects(once()).StringIO().will(return_value(stringio_mock))
+
+    Image = views.Image
+    crop_to_fit = views.crop_to_fit
+    old_basepath = views.base_path
+    StringIO = views.StringIO
+
+    functions_mock = Mock()
+    functions_mock.expects(once()).crop_to_fit(eq(img_mock), eq((100, 100))).will(return_value(img_mock))
+    views.Image = pil_mock
+    views.base_path = base_path
+    views.StringIO = stringio_module_mock
+    views.crop_to_fit = functions_mock.crop_to_fit
+    pil_mock.expects(once()).open(eq(join(base_path, path))).will(return_value(img_mock))
+    img_mock.expects(once()).save(eq(stringio_mock), eq('JPEG'), quality=eq(100))
+    ret = views.picture(path, 100, 100, crop=True, center=False)
+
+    pil_mock.verify()
+    img_mock.verify()
+    stringio_mock.verify()
+    stringio_module_mock.verify()
+    functions_mock.verify()
+    views.Image = Image
+    views.crop_to_fit = crop_to_fit
+    views.base_path = old_basepath
+    views.StringIO = StringIO
+
+    assert ret == return_mock, "Expected %r. Got %r." % (return_mock, ret)
+
+def test_picture_with_center_true_will_create_new_image_and_paste():
+    base_path = '/base/path'
+    path = 'image.jpg'
+    img_mock = Mock()
+
+    img_mock.size = 300, 300
+    pil_mock = Mock()
+
+    stringio_module_mock = Mock()
+    stringio_mock = Mock()
+    return_mock = Mock()
+
+    stringio_mock.expects(once()).getvalue().will(return_value(return_mock))
+    stringio_module_mock.expects(once()).StringIO().will(return_value(stringio_mock))
+
+    Image = views.Image
+    old_basepath = views.base_path
+    StringIO = views.StringIO
+
+    views.Image = pil_mock
+    views.base_path = base_path
+    views.StringIO = stringio_module_mock
+
+    new_img_mock = Mock()
+
+    new_img_mock.expects(once()).save(eq(stringio_mock), eq('JPEG'), quality=eq(100))
+    new_img_mock.expects(once()).paste(eq(img_mock), eq((-100, -100)))
+
+    pil_mock.expects(once()).new(eq('RGBA'), eq((100, 100)), eq(0xffffff)).will(return_value(new_img_mock))
+    pil_mock.expects(once()).open(eq(join(base_path, path))).will(return_value(img_mock))
+
+    ret = views.picture(path, 100, 100, crop=False, center=True)
+
+    pil_mock.verify()
+    img_mock.verify()
+    stringio_mock.verify()
+    stringio_module_mock.verify()
+
+    views.Image = Image
+    views.base_path = old_basepath
+    views.StringIO = StringIO
+    assert ret == return_mock, "Expected %r. Got %r." % (return_mock, ret)
