@@ -24,6 +24,9 @@ import cherrypy
 from controllers import MaCherie
 
 def runserver(this_path):
+    if not isinstance(this_path, basestring):
+        raise TypeError('macherie.runserver takes a string as parameter, got None.')
+
     cherrypy.config.update({
         'tools.encode.on': True,
         'tools.encode.encoding': 'utf-8',
@@ -43,9 +46,11 @@ def runserver(this_path):
         }
     })
 
+def main():
+    if __name__ == '__main__':
+        our_path = os.path.abspath(os.path.dirname(__file__))
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+        runserver(our_path)
 
-if __name__ == '__main__':
-    our_path = os.path.abspath(os.path.dirname(__file__))
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-    runserver(our_path)
 
+main()
