@@ -21,6 +21,7 @@
 import cherrypy
 from macherie import views
 from utils import assert_raises
+from pmock import *
 
 def test_views_has_make_url_function():
     assert hasattr(views, 'make_url'), 'macherie.views should have the function make_url'
@@ -70,4 +71,35 @@ def test_views_has_function_render_html():
 def test_views_has_function_jpeg():
     assert hasattr(views, 'jpeg'), 'macherie.views should have the function jpeg'
     assert callable(views.jpeg), 'macherie.views.jpeg should be callable'
+
+def test_jpeg_takes_path_as_param():
+    assert_raises(TypeError, views.jpeg, exc_pattern=r'jpeg.. takes at least 1 argument .0 given.')
+
+def test_jpeg_param_should_be_string():
+    assert_raises(TypeError, views.jpeg, None, exc_pattern=r'jpeg.. takes a string as parameter, got None.')
+
+def test_jpeg_success():
+    path = '/path/to/mocked/img.jpg'
+    img_mock = Mock()
+    pil_mock = Mock()
+    stringio_module_mock = Mock()
+    stringio_mock = Mock()
+    return_mock = Mock()
+
+    stringio_mock.expects(once()).getvalue().will(return_value(return_mock))
+
+    stringio_module_mock.expects(once()).StringIO().will(return_value(stringio_mock))
+
+    pil_mock.expects(once()).open(eq(path)).will(return_value(img_mock))
+
+    img_mock.expects(once()).save(eq(stringio_mock), eq("JPEG"), quality=eq(100))
+    return_got = views.jpeg(path, img_module=pil_mock, stringio_module=stringio_module_mock)
+
+    pil_mock.verify()
+    stringio_module_mock.verify()
+    img_mock.verify()
+    stringio_mock.verify()
+    assert return_got == return_mock, 'The return of views.jpeg() should be %r, got %r' % (return_mock, return_got)
+    mime = cherrypy.response.headers['Content-type']
+    assert mime == 'image/jpeg', 'The response header "Content-type" should be image/jpeg, but got %r' % mime
 

@@ -22,8 +22,8 @@ import os
 import Image
 import ImageDraw
 import cherrypy
+import StringIO
 
-from StringIO import StringIO
 from genshi.template import TemplateLoader
 
 def make_url(url):
@@ -76,7 +76,9 @@ def render_html(filename, context, template_path=None):
     generator = template.generate(**context)
     return generator.render('html', doctype='html')
 
-def jpeg(path, base='data', img_module=Image):
+def jpeg(path, base='data', img_module=Image, stringio_module=StringIO):
+    if not isinstance(path, basestring):
+        raise TypeError('jpeg() takes a string as parameter, got %r.' % path)
     fullpath = os.path.join(os.path.dirname(__file__), '..', base, path)
     try:
         img = img_module.open(fullpath)
@@ -84,7 +86,7 @@ def jpeg(path, base='data', img_module=Image):
         cherrypy.response.status = 404
         return unicode(e)
 
-    sfile = StringIO()
+    sfile = stringio_module.StringIO()
     img.save(sfile, "JPEG", quality=100)
     cherrypy.response.headers['Content-type'] = "image/jpeg"
     return sfile.getvalue()
