@@ -8,4 +8,56 @@ Scenario 1 - See if the title is the expected
     When
         I wait for the page to load
     Then
-        And I see "Ma Chérie" title
+        I see "Ma Chérie" title
+
+Scenario 2 - See that all test images are being listed
+    Given
+        I go to "/"
+    When
+        I wait for the page to load
+    Then
+        I see "bat_boy.jpg" image
+        And I see "clown.jpg" image
+        And I see "girl.jpg" image
+        And I see "girl_face.jpg" image
+        And I see "man_portrait.jpg" image
+        And I see "painted_man.jpg" image
+        And I see "skate_boarder.jpg" image
+        And I see "surfist.jpg" image
+
+Scenario 3 - Show image in lightbox
+    Given
+        I go to "/"
+        And I wait for the page to load
+    When
+        I see "clown.jpg" image
+        And I click "clown.jpg-link" link
+    Then
+        I wait for "lightbox-container-image-box" div to be present
+
+Scenario 4 - Search textbox gets empty when focused
+    Given
+        I go to "/"
+        And I see "search" textbox
+        And I see "search" textbox contains "Search"
+    When
+        I click "search" textbox
+    Then
+        And I see "search" textbox is empty
+
+Scenario 5 - Test search will filter images
+    Given
+        I go to "/"
+    When
+        I fill "search" textbox with "girl"
+        And I click "do-search" button and wait
+    Then
+        I see "girl.jpg" image
+        And I see "girl_face.jpg" image
+        And I do not see "bat_boy.jpg" image
+        And I do not see "clown.jpg" image
+        And I do not see "man_portrait.jpg" image
+        And I do not see "painted_man.jpg" image
+        And I do not see "skate_boarder.jpg" image
+        And I do not see "surfist.jpg" image
+

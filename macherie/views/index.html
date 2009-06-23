@@ -11,6 +11,9 @@
     <script type="text/javascript">
     $(document).ready(function() {
         $('#banner_wrapper a').lightBox();
+        $("#search").focus(function(){
+            $("#search").val("");
+        });
     });
     </script>
   </head>
@@ -28,8 +31,8 @@
           <!-- Search Field -->
           <fieldset id="search_wrapper">
             <form action="?filter">
-              <input type="text" value="Search" class="search" name="search" />
-              <input type="submit" value="Search" class="hide" />
+              <input type="text" value="Search" class="search" name="search" id="search" />
+              <input type="submit" id="do-search" value="Search" />
             </form>
           </fieldset>
         </div><!-- navigation wrapper -->
@@ -37,8 +40,10 @@
         <div id="banner_wrapper">
           <div class="banner banner_last" py:for="image in images">
             <h2>$image.name</h2>
-            <div id="$image.name" class="image_wrapper">
-              <a href="${make_url('/image/%s' % image.name)}"><img src="${make_url('/image/crop/228x202/%s' % image.name)}" width="228" height="202" alt="image: $image.width X $image.height" /></a>
+            <div class="image_wrapper">
+              <a id="${image.name}-link" href="${make_url('/image/%s' % image.name)}">
+                <img id="$image.name" src="${make_url('/image/crop/228x202/%s' % image.name)}" width="228" height="202" alt="image: $image.width X $image.height" />
+              </a>
             </div><!-- image_wrapper -->
           </div><!-- banner -->
         </div><!-- banner_wrapper -->
