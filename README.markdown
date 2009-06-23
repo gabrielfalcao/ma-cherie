@@ -21,9 +21,10 @@ To run:
 * CherryPy >= 3.1.1
 * Genshi >= 0.5.1
 
-To test:
+To test and build:
 --------
 * nose >= 0.11.0
+* pmock >= 0.3
 
 Running
 =======
