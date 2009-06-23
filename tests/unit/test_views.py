@@ -131,3 +131,15 @@ def test_crop_to_fit():
     img = Image.new('RGBA', (653, 342))
     ret = views.crop_to_fit(img, (320, 240))
     assert ret.size == (320, 240), 'Got expected size 458x240, got %rx%r.' % ret.size
+
+def test_picture_takes_3_parameters():
+    assert_raises(TypeError, views.picture, exc_pattern=r'picture.. takes at least 3 arguments .0 given.')
+
+def test_picture_first_param_should_be_string():
+    assert_raises(TypeError, views.picture, None, None, None, exc_pattern=r'picture.. takes a string as path parameter, got None.')
+
+def test_picture_second_param_should_be_int():
+    assert_raises(TypeError, views.picture, '', None, None, exc_pattern=r'picture.. takes a integer as width parameter, got None.')
+
+def test_picture_third_param_should_be_int():
+    assert_raises(TypeError, views.picture, '', 1, None, exc_pattern=r'picture.. takes a integer as height parameter, got None.')

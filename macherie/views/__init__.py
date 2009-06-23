@@ -141,6 +141,15 @@ def picture(path,
             mask=None,
             background=0xffffff):
 
+    if not isinstance(path, basestring):
+        raise TypeError('picture() takes a string as path parameter, got %r.' % path)
+
+    if not isinstance(width, int):
+        raise TypeError('picture() takes a integer as width parameter, got %r.' % width)
+
+    if not isinstance(height, int):
+        raise TypeError('picture() takes a integer as height parameter, got %r.' % height)
+
     wished_size = width, height
     img = Image.open(os.path.join(base_path, path))
 

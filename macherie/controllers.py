@@ -34,7 +34,6 @@ class ImageHandler(object):
 
         image = jpeg(path="/".join(args), **kw)
 
-
         if len(args) >= 3 and args[0] == 'crop':
             proportion = re.match(r'(?P<width>\d+)x(?P<height>\d+)', args[1])
             if proportion:
