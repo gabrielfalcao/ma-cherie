@@ -1,0 +1,13 @@
+As a Ma Chérie user
+I want to see all images listed on my server
+So that I can navigate over them
+
+Scenario 1 - Seeing all images
+    Given
+        I go to "/"
+        I wait for the page to load
+        And I see "Ma Chérie" title
+    When
+    
+    Then
+        #I feel acomplishment
