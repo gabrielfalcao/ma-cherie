@@ -20,6 +20,7 @@ functional:
 
 acceptance:
 	@echo "Running acceptance tests ..."
+	@pyccuracy_console -u http://localhost:8080 -d `pwd`/tests/acceptance
 	@echo "Done."
 
 run:
