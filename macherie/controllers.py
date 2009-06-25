@@ -48,7 +48,7 @@ class MaCherie(object):
 
     @cherrypy.expose
     def index(self, **kw):
-        title = u'Ma Chérie'
+        title = u'Ma Cherie'
         content = 'Picture navigator'
         images = File.all()
         if 'search' in kw.keys():

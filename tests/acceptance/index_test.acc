@@ -1,4 +1,4 @@
-As a Ma Chérie user
+As a Ma Cherie user
 I want to see all images listed on my server
 So that I can navigate over them
 
@@ -8,7 +8,7 @@ Scenario 1 - See if the title is the expected
     When
         I wait for the page to load
     Then
-        I see "Ma Chérie" title
+        I see "Ma Cherie" title
 
 Scenario 2 - See that all test images are being listed
     Given
