@@ -84,4 +84,3 @@ def assert_raises(exception, callable, *args, **kwargs):
                   % (callsig, exception, exc_info[0])
     else:
         assert False, "%s did not raise %s" % (callsig, exception)
-
