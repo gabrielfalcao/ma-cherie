@@ -22,7 +22,7 @@ import Image
 import cherrypy
 
 from macherie.models import File
-from macherie.views import render_html, jpeg, picture
+from sponge.view import render_html, jpeg, picture
 
 class ImageHandler(object):
     exposed = True
