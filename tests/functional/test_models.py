@@ -25,6 +25,8 @@ from utils import assert_raises
 templates = os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates'))
 data = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
 
+cherrypy.config['image.dir'] = data
+
 def test_filesystem_can_access():
     assert models.FileSystem.can_access('/etc/') == True, \
            'Current user should have permission to access /etc/'

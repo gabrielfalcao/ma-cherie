@@ -33,7 +33,7 @@ class File(object):
 
     @classmethod
     def all(cls):
-        return [cls(f) for f in FileSystem.list_images(cherrypy.config['data.dir'])]
+        return [cls(f) for f in FileSystem.list_images(cherrypy.config['image.dir'])]
 
 class Folder(object):
     pass

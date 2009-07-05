@@ -20,6 +20,7 @@ To run:
 
 * CherryPy >= 3.1.1
 * Genshi >= 0.5.1
+* Sponge >= 0.1
 
 To test and build:
 --------

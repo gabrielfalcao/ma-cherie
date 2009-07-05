@@ -23,28 +23,10 @@ import cherrypy
 
 from macherie.models import File
 from sponge.view import render_html, jpeg, picture
-
-class ImageHandler(object):
-    exposed = True
-
-    def __call__(self, *args, **kw):
-        if len(args) < 1:
-            cherrypy.response.status = 404
-            return "not found"
-
-        image = jpeg(path="/".join(args), **kw)
-
-        if len(args) >= 3 and args[0] == 'crop':
-            proportion = re.match(r'(?P<width>\d+)x(?P<height>\d+)', args[1])
-            if proportion:
-                width = int(proportion.group('width'))
-                height = int(proportion.group('height'))
-                return picture("/".join(args[2:]), width, height)
-
-        return image
+from sponge.controller import ImageHandler
 
 class MaCherie(object):
-    image = ImageHandler()
+    image = ImageHandler(should_cache=True)
 
     @cherrypy.expose
     def index(self, **kw):
