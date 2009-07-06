@@ -26,7 +26,7 @@ from sponge.view import render_html, jpeg, picture
 from sponge.controller import ImageHandler
 
 class MaCherie(object):
-    image = ImageHandler(should_cache=True)
+    image = ImageHandler()
 
     @cherrypy.expose
     def index(self, **kw):
