@@ -20,10 +20,11 @@
 import re
 import Image
 import cherrypy
+from sponge.image import jpeg, picture
+from sponge.template import render_html
+from sponge.controller import ImageHandler
 
 from macherie.models import File
-from sponge.view import render_html, jpeg, picture
-from sponge.controller import ImageHandler
 
 class MaCherie(object):
     image = ImageHandler()
