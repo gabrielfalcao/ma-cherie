@@ -1,0 +1,13 @@
+run-as: standalone # possible values: standalone, wsgi
+host: 127.0.0.1
+port: 4000
+autoreload: true
+application:
+  path: macherie/controllers.py
+  template-dir: macherie/views
+  image-dir: macherie/data
+  classes:
+    MaCherie: /
+
+  static:
+    /media: macherie/media
